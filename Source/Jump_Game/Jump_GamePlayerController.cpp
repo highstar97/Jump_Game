@@ -1,8 +1,10 @@
 #include "Jump_GamePlayerController.h"
 #include "Jump_GameCharacter.h"
 #include "Jump_GamePlayerState.h"
-#include "Components/WidgetComponent.h"
 #include "Jump_GameHUDWidget.h"
+#include "Components/WidgetComponent.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundCue.h"
 
 AJump_GamePlayerController::AJump_GamePlayerController()
 {
@@ -18,6 +20,14 @@ AJump_GamePlayerController::AJump_GamePlayerController()
 	if (UI_ADDSCORE_C.Succeeded())
 	{
 		AddScoreWidgetClass = UI_ADDSCORE_C.Class;
+	}
+
+	AddScoreAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("ADDSCOREAUDIOCOMPONENT"));
+
+	static ConstructorHelpers::FObjectFinder<USoundCue> SOUND_ADDSCORE(TEXT("/Game/StarterContent/Audio/Starter_Music_Cue.Starter_Music_Cue"));
+	if (SOUND_ADDSCORE.Succeeded())
+	{
+		AddScoreSound = SOUND_ADDSCORE.Object;
 	}
 }
 
@@ -38,6 +48,8 @@ void AJump_GamePlayerController::AddScore()
 {
 	AddScoreWidget = CreateWidget<UUserWidget>(this, AddScoreWidgetClass);
 	AddScoreWidget->AddToViewport();
+	AddScoreAudioComponent->SetSound(AddScoreSound);
+	AddScoreAudioComponent->Play();
 	GetWorld()->GetTimerManager().SetTimer(HideAddScoreWidgetTimerHandle, FTimerDelegate::CreateUObject(this, &AJump_GamePlayerController::HideAddScoreWidget), AddScoreWidgetHideTime, false);
 	Cast<AJump_GamePlayerState>(PlayerState)->AddScore();
 }
@@ -45,6 +57,7 @@ void AJump_GamePlayerController::AddScore()
 void AJump_GamePlayerController::HideAddScoreWidget()
 {
 	AddScoreWidget->RemoveFromParent();
+	AddScoreAudioComponent->Stop();
 }
 
 void AJump_GamePlayerController::ShowEndUI()

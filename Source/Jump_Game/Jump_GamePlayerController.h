@@ -4,6 +4,8 @@
 #include "Jump_GamePlayerController.generated.h"
 
 class UJump_GameHUDWidget;
+class UAudioComponent;
+class USoundCue;
 
 UCLASS()
 class JUMP_GAME_API AJump_GamePlayerController : public APlayerController
@@ -39,4 +41,10 @@ private:
 
 	UPROPERTY()
 	UJump_GameHUDWidget* HUDWidget;
+
+	UPROPERTY()
+	UAudioComponent* AddScoreAudioComponent;
+
+	UPROPERTY()
+	USoundCue* AddScoreSound;
 };
