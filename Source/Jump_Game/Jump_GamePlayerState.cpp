@@ -8,5 +8,6 @@ AJump_GamePlayerState::AJump_GamePlayerState()
 void AJump_GamePlayerState::AddScore()
 {
 	Score += 100;
+	OnPlayerStateChanged.Broadcast();
 	UE_LOG(LogTemp, Warning, TEXT("Score : %d"), Score);
 }
