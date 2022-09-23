@@ -17,13 +17,26 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	void AddScore();
+
+	void HideAddScoreWidget();
 	void ShowEndUI();
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<UUserWidget> AddScoreWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UJump_GameHUDWidget> HUDWidgetClass;
 
 private:
+	float AddScoreWidgetHideTime;
+
+	FTimerHandle HideAddScoreWidgetTimerHandle = { };
+
+	UPROPERTY()
+	UUserWidget* AddScoreWidget;
+
 	UPROPERTY()
 	UJump_GameHUDWidget* HUDWidget;
 };

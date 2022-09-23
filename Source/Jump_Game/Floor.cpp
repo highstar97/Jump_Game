@@ -53,7 +53,7 @@ void AFloor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		AJump_GamePlayerController* PlayerController = Cast<AJump_GamePlayerController>(UGameplayStatics::GetPlayerController(OtherActor, 0));
 		if (nullptr != PlayerController)
 		{
-			Cast<AJump_GamePlayerState>(PlayerController->PlayerState)->AddScore();
+			PlayerController->AddScore();
 		}
 		TriggerIsUsed = true;
 	}
