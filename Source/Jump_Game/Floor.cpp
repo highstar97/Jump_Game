@@ -53,16 +53,15 @@ void AFloor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* Oth
 
 void AFloor::SpawnFloor()
 {
-	//Floor Å©±â 162cm, 320cm, 18cm
+	//Floor size 162cm, 320cm, 18cm
 
 	FVector NextLocation = Mesh->GetRelativeTransform().GetLocation();
 
-	// Y : -320 - 350 ~ -320 || 320 ~ 320 + 350
-	// Z : 70 ~ 140
-
 	bool Positive = FMath::RandRange(1, 2) % 2 == 0;
-	float RandomNumberForY = FMath::RandRange(320.0f, 670.0f);
-	float RandomNumberForZ = FMath::RandRange(70.0f, 140.0f);
+
+	float Distance = 300.0f;
+	float RandomNumberForY = FMath::RandRange(320.0f, 320.0f + Distance);	// Y : -320 - Distance ~ -320 || 320 ~ 320 + Distance
+	float RandomNumberForZ = FMath::RandRange(70.0f, 140.0f);	// Z : 70 ~ 140
 
 	if (Positive)
 	{
