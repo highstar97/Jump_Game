@@ -1,4 +1,5 @@
 #include "MainFloor.h"
+#include "Jump_GameGameMode.h"
 #include "Components/BoxComponent.h"
 
 AMainFloor::AMainFloor()
@@ -58,4 +59,5 @@ void AMainFloor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor*
 {
 	// 게임 종료
 	UE_LOG(LogTemp, Warning, TEXT("Game End"));
+	Cast<AJump_GameGameMode>(GetWorld()->GetAuthGameMode())->EndGame();
 }

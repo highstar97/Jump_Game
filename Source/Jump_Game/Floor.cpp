@@ -1,5 +1,8 @@
 #include "Floor.h"
+#include "Jump_GamePlayerController.h"
+#include "Jump_GamePlayerState.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Math/UnrealMathUtility.h"
 
 AFloor::AFloor()
@@ -47,6 +50,11 @@ void AFloor::OnCharacterOverlap(UPrimitiveComponent* OverlappedComp, AActor* Oth
 	if (!TriggerIsUsed)
 	{
 		SpawnFloor();
+		AJump_GamePlayerController* PlayerController = Cast<AJump_GamePlayerController>(UGameplayStatics::GetPlayerController(OtherActor, 0));
+		if (nullptr != PlayerController)
+		{
+			Cast<AJump_GamePlayerState>(PlayerController->PlayerState)->AddScore();
+		}
 		TriggerIsUsed = true;
 	}
 }

@@ -1,8 +1,5 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
-#include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Jump_GameGameMode.generated.h"
 
@@ -13,7 +10,6 @@ class AJump_GameGameMode : public AGameModeBase
 
 public:
 	AJump_GameGameMode();
+
+	void EndGame();
 };
-
-
-
