@@ -11,11 +11,6 @@ void UJump_GameHUDWidget::BindPlayerState(AJump_GamePlayerState* PlayerState)
 	}
 }
 
-void UJump_GameHUDWidget::NativeConstruct()
-{
-	Super::NativeConstruct();
-}
-
 void UJump_GameHUDWidget::UpdatePlayerState()
 {
 	Score->SetText(FText::FromString(FString::FromInt(CurrentPlayerState->GetScore())));

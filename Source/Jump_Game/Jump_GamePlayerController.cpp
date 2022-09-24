@@ -2,6 +2,7 @@
 #include "Jump_GameCharacter.h"
 #include "Jump_GamePlayerState.h"
 #include "Jump_GameHUDWidget.h"
+#include "Jump_GameGameOverWidget.h"
 #include "Components/WidgetComponent.h"
 #include "Components/AudioComponent.h"
 #include "Sound/SoundCue.h"
@@ -29,6 +30,12 @@ AJump_GamePlayerController::AJump_GamePlayerController()
 	{
 		AddScoreSound = SOUND_ADDSCORE.Object;
 	}
+
+	static ConstructorHelpers::FClassFinder<UJump_GameGameOverWidget> UI_GAMEOVER_C(TEXT("/Game/Blueprint/Jump_GameResultWidget.Jump_GameResultWidget_C"));
+	if (UI_GAMEOVER_C.Succeeded())
+	{
+		GameOverWidgetClass = UI_GAMEOVER_C.Class;
+	}
 }
 
 void AJump_GamePlayerController::BeginPlay()
@@ -36,10 +43,13 @@ void AJump_GamePlayerController::BeginPlay()
 	HUDWidget = CreateWidget<UJump_GameHUDWidget>(this, HUDWidgetClass);
 	HUDWidget->AddToViewport();
 
+	GameOverWidget = CreateWidget<UJump_GameGameOverWidget>(this, GameOverWidgetClass);
+
 	AJump_GamePlayerState* Jump_GamePlayerState = Cast<AJump_GamePlayerState>(PlayerState);
 	if (nullptr != Jump_GamePlayerState)
 	{
 		HUDWidget->BindPlayerState(Jump_GamePlayerState);
+		GameOverWidget->BindPlayerState(Jump_GamePlayerState);
 		Jump_GamePlayerState->OnPlayerStateChanged.Broadcast();
 	}
 }
@@ -62,6 +72,8 @@ void AJump_GamePlayerController::HideAddScoreWidget()
 
 void AJump_GamePlayerController::ShowEndUI()
 {
-	// 종료 화면 UI 띄우기
-	UE_LOG(LogTemp, Warning, TEXT("Score is %d"), Cast<AJump_GamePlayerState>(PlayerState)->GetScore());
+	GameOverWidget->AddToViewport();
+	FInputModeUIOnly UIInputMode;
+	SetInputMode(UIInputMode);
+	bShowMouseCursor = true;
 }

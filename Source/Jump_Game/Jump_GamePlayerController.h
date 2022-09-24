@@ -4,6 +4,7 @@
 #include "Jump_GamePlayerController.generated.h"
 
 class UJump_GameHUDWidget;
+class UJump_GameGameOverWidget;
 class UAudioComponent;
 class USoundCue;
 
@@ -31,6 +32,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
 	TSubclassOf<UJump_GameHUDWidget> HUDWidgetClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = UI)
+	TSubclassOf<UJump_GameGameOverWidget> GameOverWidgetClass;
+
 private:
 	float AddScoreWidgetHideTime;
 
@@ -41,6 +45,9 @@ private:
 
 	UPROPERTY()
 	UJump_GameHUDWidget* HUDWidget;
+
+	UPROPERTY()
+	UJump_GameGameOverWidget* GameOverWidget;
 
 	UPROPERTY()
 	UAudioComponent* AddScoreAudioComponent;
